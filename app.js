@@ -70,18 +70,18 @@ const sessionOption={
 // })
 //middleware of session
 app.use(session(sessionOption));
-app.use((req,res,next)=>{
-    res.locals.currUser = req.user;
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    next();
-})
 //middleware for flash
 app.use(flash());
 
 //now for passport ->middleware that intitalises
 app.use(passport.initialize());
 app.use(passport.session());
+app.use((req,res,next)=>{
+    res.locals.currUser = req.user;
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+})
 
 
 
