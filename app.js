@@ -70,6 +70,12 @@ const sessionOption={
 // })
 //middleware of session
 app.use(session(sessionOption));
+app.use((req,res,next)=>{
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
+    next();
+})
 //middleware for flash
 app.use(flash());
 
@@ -77,12 +83,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req,res,next)=>{
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
-    next();
-})
+
 
 
 passport.use(new LocalStrategy(User.authenticate()));
